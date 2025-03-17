@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/style.css">
+    <script defer src="js/vue.min.js"></script>
+    <script defer src="js/main.js"></script>
+    <title>Product App</title>
+</head>
+<body>
+<div class="container">
+    <div class="column" id="column1">
+        <h2>Столбец 1</h2>
+        <div id="cards1"></div>
+        <button onclick="addCard(1)">Добавить карточку</button>
+    </div>
+    <div class="column" id="column2">
+        <h2>Столбец 2</h2>
+        <div id="cards2"></div>
+        <button onclick="addCard(2)">Добавить карточку</button>
+    </div>
+    <div class="column" id="column3">
+        <h2>Столбец 3</h2>
+        <div id="cards3"></div>
+    </div>
+</div>
+<button onclick="clearAll()">Очистить все</button>
+</body>
+</html>
