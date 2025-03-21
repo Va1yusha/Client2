@@ -35,3 +35,23 @@ function createCardHTML(card, index, column) {
         </div>
     `;
 }
+
+function addCard(column) {
+    const title = prompt('Введите заголовок карточки:');
+    const items = [];
+    for (let i = 0; i < 3; i++) {
+        const itemText = prompt(`Введите текст пункта списка ${i + 1}:`);
+        items.push({ text: itemText, completed: false });
+    }
+    const newCard = { title, items, bgColor: '#fff', textColor: '#000', description: '' };
+
+    if (column === 1 && cards.column1.length < 3) {
+        cards.column1.push(newCard);
+    } else if (column === 2 && cards.column2.length < 5) {
+        cards.column2.push(newCard);
+    } else {
+        alert('Достигнуто максимальное количество карточек в этом столбце.');
+    }
+
+    saveAndRender();
+}
