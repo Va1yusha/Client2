@@ -55,3 +55,13 @@ function addCard(column) {
 
     saveAndRender();
 }
+
+function editCardTitle(column, index, newTitle) {
+    cards['column' + column][index].title = newTitle;
+    saveAndRender();
+}
+
+function editCardDescription(column, index, newDescription) {
+    cards['column' + column][index].description = newDescription;
+    saveAndRender();
+}
