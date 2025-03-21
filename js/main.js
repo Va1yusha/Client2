@@ -99,3 +99,22 @@ function toggleItem(column, cardIndex, itemIndex) {
     }
     saveAndRender();
 }
+
+function deleteCard(column, index) {
+    cards['column' + column].splice(index, 1);
+    saveAndRender();
+}
+
+function saveAndRender() {
+    localStorage.setItem('cards', JSON.stringify(cards));
+    render();
+}
+
+function clearAll() {
+    cards = { column1: [], column2: [], column3: [] };
+    saveAndRender();
+}
+
+window.onload = function() {
+    render();
+};
