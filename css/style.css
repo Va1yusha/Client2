@@ -1,0 +1,50 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.column {
+    border-radius: 10px;
+    width: 30%;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.card {
+    border-radius: 10px;
+    border: 1px solid #000;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+button {
+    border-radius: 5px;
+    border: none;
+    margin-top: 10px;
+}
+
+textarea {
+    border-radius: 10px;
+    resize: none;
+}
+
+li {
+    padding: 5px;
+}
+
+ul {
+    padding: 0px;
+    list-style-type: none;
+}
+
+h2 {
+    text-align: center;
+}
+
+h3 {
+    margin: 10px ;
+}
