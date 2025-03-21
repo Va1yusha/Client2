@@ -78,3 +78,24 @@ function customizeCard(column, index) {
     cards['column' + column][index].textColor = textColor;
     saveAndRender();
 }
+
+function toggleItem(column, cardIndex, itemIndex) {
+    const card = cards['column' + column][cardIndex];
+    card.items[itemIndex].completed = !card.items[itemIndex].completed;
+
+    const completedCount = card.items.filter(item => item.completed).length;
+    const totalCount = card.items.length;
+
+    if (column === 1) {
+        if (completedCount > totalCount / 2 && cards.column2.length < 5) {
+            cards.column2.push(cards.column1.splice(cardIndex, 1)[0]);
+        }
+    } else if (column === 2) {
+        if (completedCount === totalCount && cards.column3.length < 5) {
+            const completedCard = cards.column2.splice(cardIndex, 1)[0];
+            completedCard.completedDate = new Date().toLocaleString(); // Устанавливаем дату и время
+            cards.column3.push(completedCard);
+        }
+    }
+    saveAndRender();
+}
