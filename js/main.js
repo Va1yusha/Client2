@@ -39,25 +39,39 @@ Vue.component('note-card', {
 });
 
 Vue.component('note-column', {
-    props: ['column'],
+    props: ['column', 'searchQuery'],
     template: `
          <div class="column">
              <h2>{{ column.title }}</h2>
-             <note-card
-                 v-for="(card, cardIndex) in column.cards"
-                 :key="card.id"
-                 :card="card"
-                 :isSecondColumn="column.title === 'Столбец 2'"
-                 :secondColumnCardCount="getSecondColumnCardCount()"
-                 @update-card="$emit('update-card', $event)"
-             ></note-card>
+             <template v-if="filteredCards.length > 0">
+                 <note-card
+                     v-for="(card, cardIndex) in filteredCards"
+                     :key="card.id"
+                     :card="card"
+                     :isSecondColumn="column.title === 'Столбец 2'"
+                     :secondColumnCardCount="getSecondColumnCardCount()"
+                     @update-card="$emit('update-card', $event)"
+                 ></note-card>
+             </template>
+             <p v-else>Нет карточек, соответствующих поиску</p>
              <button v-if="canAddCard(column)" @click="$emit('add-card', column)">Добавить карточку</button>
          </div>
      `,
+    computed: {
+        filteredCards() {
+            if (!this.searchQuery) return this.column.cards;
+            const query = this.searchQuery.toLowerCase();
+            return this.column.cards.filter(card =>
+                card.title.toLowerCase().includes(query)
+            );
+        }
+    },
     methods: {
         canAddCard(column) {
-            if (column.title === 'Столбец 1' && column.cards.length >= 3) return false;
-            if (column.title === 'Столбец 2' && column.cards.length >= 5) return false;
+            if (!this.searchQuery) {
+                if (column.title === 'Столбец 1' && column.cards.length >= 3) return false;
+                if (column.title === 'Столбец 2' && column.cards.length >= 5) return false;
+            }
             return true;
         },
         getSecondColumnCardCount() {
@@ -75,7 +89,8 @@ Vue.component('note-app', {
                 { title: 'Столбец 2', cards: [] },
                 { title: 'Столбец 3', cards: [] }
             ],
-            nextCardId: 1
+            nextCardId: 1,
+            searchQuery: ''
         };
     },
     created() {
@@ -87,11 +102,14 @@ Vue.component('note-app', {
             if (savedData) {
                 this.columns = savedData.columns;
                 this.nextCardId = savedData.nextCardId;
-        }
-    },
+            }
+        },
         saveCards() {
-            localStorage.setItem('cards', JSON.stringify({ columns: this.columns, nextCardId: this.nextCardId }));
-    },
+            localStorage.setItem('cards', JSON.stringify({
+                columns: this.columns,
+                nextCardId: this.nextCardId
+            }));
+        },
         addCard(column) {
             const newCard = {
                 id: this.nextCardId++,
@@ -132,12 +150,21 @@ Vue.component('note-app', {
         }
     },
     template: `
-     <div>
+        <div>
+            <div class="search-container">
+                <input 
+                    type="text" 
+                    v-model="searchQuery" 
+                    placeholder="Поиск по названию карточки" 
+                    class="search-input"
+                >
+            </div>
             <div class="columns">
                 <note-column
                     v-for="(column, index) in columns"
                     :key="index"
                     :column="column"
+                    :searchQuery="searchQuery"
                     @update-card="updateCard"
                     @add-card="addCard"
                 ></note-column>

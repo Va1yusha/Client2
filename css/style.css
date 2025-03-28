@@ -51,3 +51,15 @@ ul {
     list-style-type: none;
     padding: 0;
 }
+
+.search-container {
+    margin: 20px;
+    text-align: center;
+}
+
+.search-input {
+    width: 10%;
+    padding: 1px 2px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
